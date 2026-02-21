@@ -1,4 +1,5 @@
 export const dynamic = 'force-dynamic';
+import { API_BASE_URL } from "@/lib/api";
 
 export async function GET(req) {
     const { searchParams } = new URL(req.url);
@@ -16,7 +17,7 @@ export async function GET(req) {
     }
 
     const res = await fetch(
-        `http://103.245.181.5:5001/search?q=${encodeURIComponent(q)}&type=${encodeURIComponent(type)}&page=${encodeURIComponent(page)}&size=${encodeURIComponent(size)}`,
+        `${API_BASE_URL}/search?q=${encodeURIComponent(q)}&type=${encodeURIComponent(type)}&page=${encodeURIComponent(page)}&size=${encodeURIComponent(size)}`,
         {
             headers: {
                 'Content-Type': 'application/json',

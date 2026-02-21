@@ -1,10 +1,11 @@
 import { NextResponse } from "next/server";
+import { API_BASE_URL } from "@/lib/api";
 
 export async function POST(req) {
     const { access_id, totp } = await req.json();
 
     // Proxy ke backend authentication
-    const res = await fetch("http://103.245.181.5:5001/new-login", {
+    const res = await fetch(`${API_BASE_URL}/new-login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ access_id, totp }),

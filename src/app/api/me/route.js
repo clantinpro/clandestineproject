@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { API_BASE_URL } from "@/lib/api";
 
 export async function GET(req) {
     const token = req.cookies.get("token")?.value;
@@ -11,7 +12,7 @@ export async function GET(req) {
     const q = searchParams.get('q');
     const type = searchParams.get('type');
 
-    const res = await fetch(`http://103.245.181.5:5001/update?q=${q}&type=${type}`, {
+    const res = await fetch(`${API_BASE_URL}/update?q=${q}&type=${type}`, {
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`

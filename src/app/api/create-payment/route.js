@@ -1,4 +1,5 @@
 export const dynamic = 'force-dynamic';
+import { API_BASE_URL } from "@/lib/api";
 
 export async function POST(req) {
     const token = req.cookies.get("token")?.value;
@@ -38,7 +39,7 @@ export async function POST(req) {
     // Hanya kirim field yang dibutuhkan ke backend
     const payload = { invoiceId, assetCode, blockchainCode, isEvm };
 
-    const res = await fetch(`http://103.245.181.5:5001/create-payment`, {
+    const res = await fetch(`${API_BASE_URL}/create-payment`, {
         method: "POST",
         headers: {
             'Content-Type': 'application/json',

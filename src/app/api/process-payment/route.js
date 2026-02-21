@@ -1,4 +1,5 @@
 export const dynamic = 'force-dynamic';
+import { API_BASE_URL } from "@/lib/api";
 
 export async function POST(req) {
     // Get token from cookies
@@ -30,7 +31,7 @@ export async function POST(req) {
     }
 
     // Forward request to backend API
-    const res = await fetch("http://103.245.181.5:5001/process-payment", {
+    const res = await fetch(`${API_BASE_URL}/process-payment`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

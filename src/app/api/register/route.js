@@ -1,11 +1,12 @@
 import { NextResponse } from "next/server";
+import { API_BASE_URL } from "@/lib/api";
 
 export async function POST(req) {
     try {
         const { referral, captcha } = await req.json();
 
         // Forward ke API backend-mu
-        const res = await fetch("http://103.245.181.5:5001/register", {
+        const res = await fetch(`${API_BASE_URL}/register`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

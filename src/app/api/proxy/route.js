@@ -1,11 +1,12 @@
 export const dynamic = 'force-dynamic';
+import { API_BASE_URL } from "@/lib/api";
 
 export async function GET(req) {
     // Parse all params dari URL
     const { searchParams } = new URL(req.url);
 
     // Build backend query string
-    let backendUrl = "http://103.245.181.5:5001/search?";
+    let backendUrl = `${API_BASE_URL}/search?`;
     let paramsArr = [];
     for (const [key, value] of searchParams.entries()) {
         if (value && value !== "undefined" && value !== "null") {

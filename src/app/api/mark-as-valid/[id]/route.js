@@ -1,4 +1,5 @@
 export const dynamic = 'force-dynamic';
+import { API_BASE_URL } from "@/lib/api";
 
 export async function PUT(req, context) {
     const params = await context.params;
@@ -20,7 +21,7 @@ export async function PUT(req, context) {
     }
 
     // Forward the request to backend, pakai token JWT asli!
-    const res = await fetch(`http://103.245.181.5:5001/mark-as-valid/${id}`, {
+    const res = await fetch(`${API_BASE_URL}/mark-as-valid/${id}`, {
         method: "PUT",
         headers: {
             'Content-Type': 'application/json',

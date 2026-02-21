@@ -1,4 +1,5 @@
 import { cookies } from "next/headers";
+import { API_BASE_URL } from "@/lib/api";
 
 export async function POST(request) {
     try {
@@ -8,7 +9,7 @@ export async function POST(request) {
         const cookiesStore = await cookies();
         const token = cookiesStore.get("token")?.value;
 
-        const backendUrl = "http://103.245.181.5:5001/admin/users";
+        const backendUrl = `${API_BASE_URL}/admin/users`;
 
         const resp = await fetch(backendUrl, {
             method: "POST",

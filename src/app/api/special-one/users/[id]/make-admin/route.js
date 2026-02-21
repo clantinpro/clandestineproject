@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
+import { API_BASE_URL } from "@/lib/api";
 
 export async function POST(request, { params }) {
     const { id } = params;
@@ -7,7 +8,7 @@ export async function POST(request, { params }) {
     const token = cookiesStore.get("token")?.value;
 
     try {
-        const res = await fetch(`http://103.245.181.5:5001/admin/users/${id}/make-admin`, {
+        const res = await fetch(`${API_BASE_URL}/admin/users/${id}/make-admin`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

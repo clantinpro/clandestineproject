@@ -1,4 +1,5 @@
 export const dynamic = 'force-dynamic';
+import { API_BASE_URL } from "@/lib/api";
 
 export async function POST(req) {
     const token = req.cookies.get("token")?.value;
@@ -11,7 +12,7 @@ export async function POST(req) {
 
     const body = await req.json();
 
-    const res = await fetch(`http://103.245.181.5:5001/create-invoice`, {
+    const res = await fetch(`${API_BASE_URL}/create-invoice`, {
         method: "POST",
         headers: {
             'Content-Type': 'application/json',

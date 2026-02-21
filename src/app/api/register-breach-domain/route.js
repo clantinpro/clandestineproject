@@ -1,4 +1,5 @@
 export const dynamic = 'force-dynamic';
+import { API_BASE_URL } from "@/lib/api";
 
 export async function POST(req) {
     const token = req.cookies.get("token")?.value;
@@ -14,7 +15,7 @@ export async function POST(req) {
     } catch {
         body = {};
     }
-    const res = await fetch("http://103.245.181.5:5001/register-breach-domain", {
+    const res = await fetch(`${API_BASE_URL}/register-breach-domain`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

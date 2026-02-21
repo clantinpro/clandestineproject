@@ -1,3 +1,5 @@
+import { API_BASE_URL } from "@/lib/api";
+
 export async function POST(req) {
     const token = req.cookies.get("token")?.value;
     if (!token) {
@@ -7,7 +9,7 @@ export async function POST(req) {
         );
     }
 
-    const response = await fetch('http://103.245.181.5:5001/use-breach', {
+    const response = await fetch(`${API_BASE_URL}/use-breach`, {
         method: "POST",
         headers: {
             'Content-Type': 'application/json',

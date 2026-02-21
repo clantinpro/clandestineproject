@@ -1,4 +1,5 @@
 export const dynamic = 'force-dynamic';
+import { API_BASE_URL } from "@/lib/api";
 
 export async function GET(req) {
     const token = req.cookies.get("token")?.value;
@@ -9,7 +10,7 @@ export async function GET(req) {
         );
     }
 
-    const res = await fetch(`http://103.245.181.5:5001/my-plan`, {
+    const res = await fetch(`${API_BASE_URL}/my-plan`, {
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`,

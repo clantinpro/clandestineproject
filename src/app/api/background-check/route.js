@@ -1,4 +1,5 @@
 export const dynamic = 'force-dynamic';
+import { API_BASE_URL } from "@/lib/api";
 
 export async function POST(req) {
     // Ambil token dari cookie
@@ -30,7 +31,7 @@ export async function POST(req) {
     }
 
     // Panggil backend background-check
-    const res = await fetch(`http://103.245.181.5:5001/background-check`, {
+    const res = await fetch(`${API_BASE_URL}/background-check`, {
         method: "POST",
         headers: {
             'Content-Type': 'application/json',

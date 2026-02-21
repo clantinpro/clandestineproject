@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import ExcelJS from "exceljs";
+import { API_BASE_URL } from "@/lib/api";
 
 function toBuffer(workbook) {
     return workbook.xlsx.writeBuffer();
@@ -18,7 +19,7 @@ export async function GET(req) {
     const { searchParams } = new URL(req.url);
 
     // Build backend URL
-    let backendUrl = "http://103.245.181.5:5001/search?";
+    let backendUrl = `${API_BASE_URL}/search?`;
     let paramsArr = [];
     for (const [key, value] of searchParams.entries()) {
         if (value && value !== "undefined" && value !== "null" && key !== "page" && key !== "size" && key !== "export") {

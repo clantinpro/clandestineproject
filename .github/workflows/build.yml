@@ -1,0 +1,46 @@
+name: Build and Push Next.js to GHCR
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-push:
+    runs-on: clantinpro-runner
+
+    # Izin token bawaan GitHub buat nge-push ke GHCR
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # INI STEP YANG DIBUTUHKAN: Login otomatis ke GHCR pakai token bawaan
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Ambil Versi dari package.json
+        id: get_version
+        run: |
+          VERSION=$(jq -r .version package.json)
+          echo "APP_VERSION=$VERSION" >> $GITHUB_ENV
+          echo "Versi yang mau di-build: $VERSION"
+
+      - name: Build and Push pakai Kaniko
+        uses: int128/kaniko-action@v1
+        with:
+          push: true
+          tags: |
+            ghcr.io/clantinpro/${{ github.event.repository.name }}:latest
+            ghcr.io/clantinpro/${{ github.event.repository.name }}:${{ env.APP_VERSION }}
+          file: ./Dockerfile
+          # Cache layer di GHCR agar build lebih cepat
+          cache: true
+          cache-repository: ghcr.io/clantinpro/${{ github.event.repository.name }}/cache
