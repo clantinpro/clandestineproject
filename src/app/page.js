@@ -1,10 +1,10 @@
 "use client";
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../components/navbar";
 import Globe from "../components/globe";
 import Footer from "../components/footer";
 import Image from "next/image";
-import {useRouter} from "next/navigation";
+import { useRouter } from "next/navigation";
 
 import {
     ShieldCheckIcon,
@@ -19,15 +19,15 @@ import {
   same data as your dashboard
 ----------------------------*/
 const homeStats = [
-    {label: "Email", value: 26102688785},
-    {label: "Password", value: 13342389831},
-    {label: "Full name", value: 12801652751},
-    {label: "Telephone", value: 11694818802},
-    {label: "Nick", value: 10456573331},
-    {label: "Document number", value: 3657038761},
+    { label: "Email", value: 26102688785 },
+    { label: "Password", value: 13342389831 },
+    { label: "Full name", value: 12801652751 },
+    { label: "Telephone", value: 11694818802 },
+    { label: "Nick", value: 10456573331 },
+    { label: "Document number", value: 3657038761 },
 ];
 
-function StatsCards({stats, duration = 900}) {
+function StatsCards({ stats, duration = 900 }) {
     // animate counters from 0 to target for nicer UX on homepage
     const [counts, setCounts] = useState(stats.map(() => 0));
 
@@ -63,9 +63,9 @@ function StatsCards({stats, duration = 900}) {
         <section className="py-14 bg-gradient-to-b from-transparent to-black/20">
             <div className="max-w-7xl mx-auto px-6">
                 <div className="text-center mb-8">
-          <span className="text-[#f03262] font-mono text-sm tracking-widest">
-            DATA SNAPSHOT
-          </span>
+                    <span className="text-[#f03262] font-mono text-sm tracking-widest">
+                        DATA SNAPSHOT
+                    </span>
                     <h2 className="text-2xl md:text-3xl font-bold text-white mt-2">
                         Live leak & exposure overview
                     </h2>
@@ -100,7 +100,7 @@ function StatsCards({stats, duration = 900}) {
                             <div className="mt-4 text-sm text-gray-400">
                                 <span
                                     className="inline-block bg-[#f03262]/10 text-[#f03262] px-2 py-1 rounded mr-2 text-xs font-medium">
-                                  Live
+                                    Live
                                 </span>
                                 Aggregated from deep/dark web sources and stealer logs.
                             </div>
@@ -131,7 +131,7 @@ export default function Home() {
             title: "Stealer Monitoring",
             description:
                 "Protect your organization from stealer malware threats by identifying credential and cookie theft targeting your digital assets. Stay ahead with real-time alerts and forensic insights.",
-            icon: <BugAntIcon className="w-10 h-10 text-[#f03262]"/>,
+            icon: <BugAntIcon className="w-10 h-10 text-[#f03262]" />,
             features: [
                 "Stealer log monitoring",
                 "Credential & cookie alerts",
@@ -143,7 +143,7 @@ export default function Home() {
             title: "Dark Web Leaks Monitoring",
             description:
                 "Detect compromised credentials, databases, and assets exposed on the dark web. Receive instant alerts to secure your business before attackers exploit your data.",
-            icon: <MagnifyingGlassIcon className="w-10 h-10 text-[#f03262]"/>,
+            icon: <MagnifyingGlassIcon className="w-10 h-10 text-[#f03262]" />,
             features: ["Deep/dark web search", "Leak & dump detection", "Exposure alerting"],
         },
         {
@@ -151,27 +151,16 @@ export default function Home() {
             title: "Vulnerability Scanning",
             description:
                 "Continuously scan your digital infrastructure for new vulnerabilities and exposures. Get notified to patch risks before they are exploited.",
-            icon: <ShieldCheckIcon className="w-10 h-10 text-[#f03262]"/>,
+            icon: <ShieldCheckIcon className="w-10 h-10 text-[#f03262]" />,
             features: ["Automated asset scanning", "Zero-day & CVE alerts", "Continuous risk assessment"],
         },
     ];
 
     return (
         <div className="relative overflow-x-hidden">
-            <div className="w-full bg-yellow-400 text-black text-center py-2 px-3 sm:px-4 font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 z-40 shadow-md">
-                <svg className="w-4 h-4 text-black hidden sm:inline" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M12 9v2m0 4h.01M4.93 19.07A10 10 0 1 1 19.07 4.93a10 10 0 0 1-14.14 14.14z"/>
-                </svg>
-
-                {/* short text for small screens, full text for >= sm */}
-                <span className="sm:hidden">Beta — features may change.  Please share feedback!</span>
-                <span className="hidden sm:inline">
-                This platform is currently in <strong className="font-bold mx-1">Beta</strong>. Features and data may change. Please share feedback!
-              </span>
-            </div>
             {/* Hero Section */}
             <div className="relative h-screen w-full">
-                <Globe/>
+                <Globe />
 
                 <section
                     className="absolute inset-0 flex items-center justify-center px-4 sm:px-6 lg:px-8 text-white z-10">
@@ -180,7 +169,7 @@ export default function Home() {
                             Credentials</h2>
                         <p className="text-md md:text-xl mb-8 animate-fade-in">
                             Search our real-time stealer malware database for
-                            <br className="hidden md:block"/>
+                            <br className="hidden md:block" />
                             exposed credentials, cookies, and sensitive data targeting your domain.
                         </p>
 
@@ -206,7 +195,7 @@ export default function Home() {
             </div>
 
             {/* NEW: Stats cards section (placed right after the hero/banner) */}
-            <StatsCards stats={homeStats}/>
+            <StatsCards stats={homeStats} />
 
             {/* Products Section - Dark Theme */}
             <section className="py-20 bg-gray-900 bg-opacity-50 backdrop-blur-sm">
@@ -220,7 +209,7 @@ export default function Home() {
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                         {[
                             {
-                                icon: <BugAntIcon className="w-8 h-8 text-[#f03262]"/>,
+                                icon: <BugAntIcon className="w-8 h-8 text-[#f03262]" />,
                                 title: "Dark Web Stealer Monitoring",
                                 description:
                                     "Automated monitoring of stealer malware logs (Redline, Raccoon, Vidar, etc.) to detect stolen credentials, cookies, and sensitive assets targeting your organization.",
@@ -228,7 +217,7 @@ export default function Home() {
                                 href: "/dark_web/stealer",
                             },
                             {
-                                icon: <MagnifyingGlassIcon className="w-8 h-8 text-[#f03262]"/>,
+                                icon: <MagnifyingGlassIcon className="w-8 h-8 text-[#f03262]" />,
                                 title: "Dark Web Leaks Monitoring",
                                 description:
                                     "Continuous surveillance of underground markets, leak sites, and forums to identify exposed credentials, databases, and sensitive data before attackers exploit them.",
@@ -236,7 +225,7 @@ export default function Home() {
                                 href: "/dark_web/leaks",
                             },
                             {
-                                icon: <ShieldCheckIcon className="w-8 h-8 text-[#f03262]"/>,
+                                icon: <ShieldCheckIcon className="w-8 h-8 text-[#f03262]" />,
                                 title: "Vulnerability Scanning",
                                 description:
                                     "Automated scanning and monitoring of your digital assets for new vulnerabilities and exposures—enabling fast remediation and continuous risk reduction.",
@@ -245,7 +234,7 @@ export default function Home() {
                             },
                         ].map((product, index) => (
                             <div key={index}
-                                 className="bg-gray-800 border border-gray-700 rounded-xl p-8 hover:border-[#f03262] transition-all hover:shadow-lg hover:shadow-[#f03262]/10">
+                                className="bg-gray-800 border border-gray-700 rounded-xl p-8 hover:border-[#f03262] transition-all hover:shadow-lg hover:shadow-[#f03262]/10">
                                 <div
                                     className="w-12 h-12 bg-gray-700 rounded-lg flex items-center justify-center mb-6">{product.icon}</div>
                                 <h3 className="text-xl font-bold text-white mb-3">{product.title}</h3>
@@ -254,17 +243,17 @@ export default function Home() {
                                 <ul className="space-y-2 mb-6">
                                     {product.features.map((feature, i) => (
                                         <li key={i} className="flex items-center text-gray-400">
-                                            <CheckCircleIcon className="w-4 h-4 text-[#f03262] mr-2"/>
+                                            <CheckCircleIcon className="w-4 h-4 text-[#f03262] mr-2" />
                                             {feature}
                                         </li>
                                     ))}
                                 </ul>
 
                                 <a href={product.href}
-                                   className="text-[#f03262] hover:text-white font-medium flex items-center group">
+                                    className="text-[#f03262] hover:text-white font-medium flex items-center group">
                                     Explore solution
                                     <ArrowRightIcon
-                                        className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform"/>
+                                        className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
                                 </a>
                             </div>
                         ))}
@@ -314,7 +303,7 @@ export default function Home() {
                                 className="group flex items-start p-4 rounded-lg transition-all hover:bg-gray-800/50 hover:border-l-2 hover:border-[#f03262]">
                                 <div
                                     className="bg-[#f03262]/20 p-2 rounded-lg mr-4 group-hover:bg-[#f03262]/30 transition-all">
-                                    <BugAntIcon className="w-6 h-6 text-[#f03262]"/>
+                                    <BugAntIcon className="w-6 h-6 text-[#f03262]" />
                                 </div>
                                 <div>
                                     <h4 className="font-bold text-white">Stealer Malware Log Monitoring</h4>
@@ -327,7 +316,7 @@ export default function Home() {
                                 className="group flex items-start p-4 rounded-lg transition-all hover:bg-gray-800/50 hover:border-l-2 hover:border-[#f03262]">
                                 <div
                                     className="bg-[#f03262]/20 p-2 rounded-lg mr-4 group-hover:bg-[#f03262]/30 transition-all">
-                                    <MagnifyingGlassIcon className="w-6 h-6 text-[#f03262]"/>
+                                    <MagnifyingGlassIcon className="w-6 h-6 text-[#f03262]" />
                                 </div>
                                 <div>
                                     <h4 className="font-bold text-white">Dark Web Leaks Monitoring</h4>
@@ -340,7 +329,7 @@ export default function Home() {
                                 className="group flex items-start p-4 rounded-lg transition-all hover:bg-gray-800/50 hover:border-l-2 hover:border-[#f03262]">
                                 <div
                                     className="bg-[#f03262]/20 p-2 rounded-lg mr-4 group-hover:bg-[#f03262]/30 transition-all">
-                                    <ShieldCheckIcon className="w-6 h-6 text-[#f03262]"/>
+                                    <ShieldCheckIcon className="w-6 h-6 text-[#f03262]" />
                                 </div>
                                 <div>
                                     <h4 className="font-bold text-white">Vulnerability Scanning & Alerts</h4>
@@ -352,8 +341,8 @@ export default function Home() {
 
                         <div className="mt-10 flex flex-col sm:flex-row gap-4">
                             <a href="/contact"
-                               className="bg-gradient-to-r from-[#f03262] to-[#d82a56] hover:from-[#f03262]/90 hover:to-[#d82a56]/90 text-white px-6 py-3 rounded-lg font-medium transition-all hover:shadow-lg hover:shadow-[#f03262]/30 flex items-center justify-center">
-                                <ShieldCheckIcon className="w-5 h-5 mr-2"/>
+                                className="bg-gradient-to-r from-[#f03262] to-[#d82a56] hover:from-[#f03262]/90 hover:to-[#d82a56]/90 text-white px-6 py-3 rounded-lg font-medium transition-all hover:shadow-lg hover:shadow-[#f03262]/30 flex items-center justify-center">
+                                <ShieldCheckIcon className="w-5 h-5 mr-2" />
                                 Request Access
                             </a>
                         </div>
@@ -374,7 +363,7 @@ export default function Home() {
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                         {useCases.map((item) => (
                             <div key={item.id}
-                                 className="border border-[#f03262] bg-gray-800/50 shadow-lg shadow-[#f03262]/20 rounded-xl p-8 transition-all">
+                                className="border border-[#f03262] bg-gray-800/50 shadow-lg shadow-[#f03262]/20 rounded-xl p-8 transition-all">
                                 <div className="flex items-center mb-6">
                                     <div className="p-3 rounded-lg bg-gray-800 mr-4">{item.icon}</div>
                                     <h3 className="text-2xl font-bold text-white">{item.title}</h3>
@@ -383,7 +372,7 @@ export default function Home() {
                                 <ul className="space-y-3">
                                     {item.features.map((feature, i) => (
                                         <li key={i} className="flex items-center text-gray-400">
-                                            <CheckCircleIcon className="w-5 h-5 text-[#f03262] mr-2"/>
+                                            <CheckCircleIcon className="w-5 h-5 text-[#f03262] mr-2" />
                                             {feature}
                                         </li>
                                     ))}
@@ -395,7 +384,7 @@ export default function Home() {
             </section>
 
             {/* Footer Section */}
-            <Footer/>
+            <Footer />
         </div>
     );
 }

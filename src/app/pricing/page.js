@@ -3,129 +3,128 @@ import { useState, useEffect } from "react";
 import Script from "next/script";
 import PaymentFlowModalPricing from "../../components/pricing/payment_flow_modal_pricing";
 import ButtonSpinner from "../../components/ui/button-spinner";
-import {useAuth} from "../../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 
 const HARDCODE_PRICING = [
     {
-        "_id": "6866108da3a6824bb869e488",
+        "_id": "api_query_base",
+        "title": "API Access Query Base",
         "description": "For small-scale security monitoring",
-        "domain": "1",
+        "domain": "API Query",
         "features": [
-            "Unlimited scans",
-            "Unlimited assets per domain",
-            "24/7 vulnerability scanning",
-            "Real-time alerts",
+            "100 Query per day",
+            "Additional 1$ per query",
+            "Unlimited domain",
             "Basic reporting"
         ],
         "monthly": "600",
         "quarterly": "1620",
+        "semi_annually": "3060",
         "yearly": "5760"
     },
     {
-        "_id": "6866108da3a6824bb869e489",
+        "_id": "api_result_base",
+        "title": "API Access Result Base",
         "description": "For growing businesses",
-        "domain": "5",
+        "domain": "API Result",
         "features": [
-            "Unlimited scans",
-            "Unlimited assets per domain",
-            "Priority scanning queue",
-            "Advanced reporting",
-            "API access",
-            "Email support"
+            "100 result per day",
+            "Additional 1$ per result query",
+            "Unlimited domain",
+            "500 Query per day",
+            "Basic reporting"
         ],
-        "isPopular": true,
-        "monthly": "900",
-        "quarterly": "2430",
-        "yearly": "8640"
+        "monthly": "1800",
+        "quarterly": "4860",
+        "semi_annually": "9180",
+        "yearly": "17280"
     },
     {
-        "_id": "6866108da3a6824bb869e48a",
-        "description": "For professional security teams",
-        "domain": "10",
-        "features": [
-            "Unlimited scans",
-            "Unlimited assets per domain",
-            "Dedicated scan nodes",
-            "Custom scan profiles",
-            "Scheduled scanning",
-            "Phone & email support"
-        ],
-        "monthly": "1600",
-        "quarterly": "4320",
-        "yearly": "15360"
-    },
-    {
-        "_id": "6866108da3a6824bb869e48b",
+        "_id": "20_domains",
+        "title": "20 Domains",
         "description": "For enterprise security operations",
         "domain": "20",
         "features": [
             "Unlimited scans",
             "Unlimited assets per domain",
-            "Dedicated account manager",
-            "Compliance reporting",
-            "Integration support",
-            "24/7 technical support"
+            "2000 query per Day",
+            "Basic reporting",
+            "API Key",
+            "Email Support"
         ],
         "monthly": "2700",
         "quarterly": "7290",
+        "semi_annually": "13770",
         "yearly": "25920"
     },
     {
-        "_id": "6866108da3a6824bb869e48c",
+        "_id": "40_domains",
+        "title": "40 Domains",
         "description": "For large-scale security programs",
         "domain": "40",
         "features": [
             "Unlimited scans",
             "Unlimited assets per domain",
-            "Custom SLAs",
-            "Executive reports",
-            "Onboarding assistance",
-            "Dedicated support line"
+            "4000 Query Per Day",
+            "Basic reporting",
+            "API Key",
+            "Email Support"
         ],
         "monthly": "5000",
         "quarterly": "13500",
+        "semi_annually": "25500",
         "yearly": "48000"
     },
     {
-        "_id": "6866108da3a6824bb869e48d",
+        "_id": "60_domains",
+        "title": "60 Domains",
         "description": "For large-scale security programs",
         "domain": "60",
         "features": [
             "Unlimited scans",
             "Unlimited assets per domain",
-            "Custom SLAs",
-            "Executive reports",
-            "Onboarding assistance",
-            "Dedicated support line"
+            "6000 Query Per Day",
+            "Basic reporting",
+            "API Key",
+            "Email Support"
         ],
         "monthly": "6000",
         "quarterly": "16200",
+        "semi_annually": "30600",
         "yearly": "57600"
     },
     {
-        "_id": "6866108da3a6824bb869e48e",
+        "_id": "unlimited_domains",
+        "title": "Unlimited Domains",
         "description": "For global-scale security operations",
         "domain": "unlimited",
         "features": [
             "Unlimited scans",
             "Unlimited assets per domain",
-            "Unlimited domains",
-            "Dedicated security advisor",
-            "Enterprise integrations",
-            "Highest priority support"
+            "10.000 Query Per Day",
+            "Basic reporting",
+            "API Key",
+            "Email Support",
+            "Dedicated security advisor"
         ],
         "monthly": "10000",
         "quarterly": "27000",
-        "yearly": "96000"
+        "semi_annually": "51000",
+        "yearly": "96000",
+        "isPopular": true
     },
     {
-        "_id": "6866108da3a6824bb869e48f",
+        "_id": "lifetime_domains",
+        "title": "Unlimited Domains (Lifetime)",
         "description": "Lifetime access for organizations with the highest security needs",
         "domain": "unlimited",
         "features": [
             "Unlimited scans",
             "Unlimited assets per domain",
-            "Unlimited domains",
+            "Unlimited Query Per day",
+            "Basic reporting",
+            "API Key",
+            "Email Support",
             "Dedicated security advisor",
             "Enterprise integrations",
             "Highest priority support",
@@ -134,8 +133,9 @@ const HARDCODE_PRICING = [
         "isContact": true,
         "monthly": "Contact Sales",
         "quarterly": "Contact Sales",
+        "semi_annually": "Contact Sales",
         "yearly": "Contact Sales"
-    },
+    }
 ];
 
 export default function PricingPage() {
@@ -322,43 +322,61 @@ export default function PricingPage() {
                             >
                                 <span>Monthly</span>
                                 <span className="font-bold">
-                        ${Number(selectedPlan.monthly).toLocaleString(undefined, {
-                                    minimumFractionDigits: 2,
-                                    maximumFractionDigits: 2,
-                                })}/month
-                    </span>
+                                    ${Number(selectedPlan.monthly).toLocaleString(undefined, {
+                                        minimumFractionDigits: 2,
+                                        maximumFractionDigits: 2,
+                                    })}/month
+                                </span>
                             </button>
                             <button
                                 onClick={() => handleSubscriptionSelect("quarterly")}
                                 className="w-full py-3 px-4 bg-gray-700 hover:bg-gray-600 rounded-md text-white text-left flex justify-between items-center"
                                 disabled={subscriptionLoading}
                             >
-                                <span>Quarterly</span>
+                                <span>3 Months</span>
                                 <span className="font-bold">
-                        ${Number(selectedPlan.quarterly).toLocaleString(undefined, {
-                                    minimumFractionDigits: 2,
-                                    maximumFractionDigits: 2,
-                                })}/quarter
-                        <span className="text-sm text-green-400 ml-2">
-                            (Save 10%)
-                        </span>
-                    </span>
+                                    ${Number(selectedPlan.quarterly).toLocaleString(undefined, {
+                                        minimumFractionDigits: 2,
+                                        maximumFractionDigits: 2,
+                                    })}/3 months
+                                    <span className="text-sm text-green-400 ml-2">
+                                        (Save 10%)
+                                    </span>
+                                </span>
                             </button>
+                            {selectedPlan.semi_annually && selectedPlan.semi_annually !== "Contact Sales" && (
+                                <button
+                                    onClick={() => handleSubscriptionSelect("semi_annually")}
+                                    className="w-full py-3 px-4 bg-gray-700 hover:bg-gray-600 rounded-md text-white text-left flex justify-between items-center"
+                                    disabled={subscriptionLoading}
+                                >
+                                    <span>6 Months</span>
+                                    <span className="font-bold">
+                                        ${Number(selectedPlan.semi_annually).toLocaleString(undefined, {
+                                            minimumFractionDigits: 2,
+                                            maximumFractionDigits: 2,
+                                        })}/6 months
+                                        <span className="text-sm text-green-400 ml-2">
+                                            (Save 15%)
+                                        </span>
+                                    </span>
+                                </button>
+                            )}
                             <button
                                 onClick={() => handleSubscriptionSelect("yearly")}
                                 className="w-full py-3 px-4 bg-[#f33d74] hover:bg-[#e63368] rounded-md text-white text-left flex justify-between items-center"
                                 disabled={subscriptionLoading}
                             >
-                                <span>Yearly</span>
+                                <span>1 Year</span>
                                 <span className="font-bold">
-                        ${Number(selectedPlan.yearly).toLocaleString(undefined, {
-                                    minimumFractionDigits: 2,
-                                    maximumFractionDigits: 2,
-                                })}/year
-                        <span className="text-sm text-green-400 ml-2">
-                            (Save 20%)
-                        </span>
-                    </span>
+                                    ${Number(selectedPlan.yearly).toLocaleString(undefined, {
+                                        minimumFractionDigits: 2,
+                                        maximumFractionDigits: 2,
+                                    })}/year
+                                    <span className="text-sm text-green-400 ml-2">
+                                        (Save 20%)
+                                    </span>
+                                </span>
                             </button>
                         </div>
                         <button
@@ -377,7 +395,7 @@ export default function PricingPage() {
                 <div className="fixed top-24 left-4 z-50 bg-green-500/95 text-white py-3 px-6 rounded-xl flex items-center gap-3 shadow-2xl border border-green-600 animate-fade-in-up">
                     <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24">
                         <circle cx="12" cy="12" r="10" fill="#22c55e" />
-                        <path d="M8 12.5l2.5 2L16 9" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M8 12.5l2.5 2L16 9" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                     <div>
                         <div className="font-bold">You have an active plan: <span className="underline">{planName}</span></div>
@@ -412,111 +430,109 @@ export default function PricingPage() {
                     ) : (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                             {plans.
-                            filter(plan => !plan.isTest).map((plan, index) => {
-                                const isCurrent = currentPlan && (
-                                    (plan._id && plan._id === currentPlan.plan) ||
-                                    (plan.domain && plan.domain === currentPlan.domain)
-                                );
-                                return (
-                                    <div
-                                        key={plan._id}
-                                        className={`bg-[#1A1B1E] rounded-2xl p-8 text-white shadow-2xl transition-all duration-300 hover:scale-[1.02] relative
+                                filter(plan => !plan.isTest).map((plan, index) => {
+                                    const isCurrent = currentPlan && (
+                                        (plan._id && plan._id === currentPlan.plan) ||
+                                        (plan.domain && plan.domain === currentPlan.domain)
+                                    );
+                                    return (
+                                        <div
+                                            key={plan._id}
+                                            className={`bg-[#1A1B1E] rounded-2xl p-8 text-white shadow-2xl transition-all duration-300 hover:scale-[1.02] relative
                     ${plan.isPopular ? "ring-2 ring-[#f33d74]" : ""}
                     ${isCurrent ? "border-2 border-green-500" : ""}`}
-                                    >
-                                        {isCurrent && (
-                                            <div
-                                                className="absolute top-0 right-0 bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-lg">
-                                                CURRENT PLAN
-                                            </div>
-                                        )}
-                                        {plan.isPopular && (
-                                            <div
-                                                className="bg-[#f33d74] text-white text-xs font-bold px-3 py-1 rounded-full inline-block mb-4">
-                                                POPULAR
-                                            </div>
-                                        )}
-                                        <h3 className="text-2xl font-bold mb-2">
-                                            {plan.domain === "unlimited"
-                                                ? "Unlimited Domains"
-                                                : `${plan.domain} Domain${plan.domain === "1" ? "" : "s"}`}
-                                        </h3>
-                                        <p className="text-gray-400 mb-6">{plan.description}</p>
-                                        <div className="mb-6">
-                                            {plan.isContact ? (
-                                                <span className="text-3xl font-bold text-[#f33d74]">
-                                                    Contact Sales
-                                                </span>
-                                            ) : (
-                                                <>
-                                                    {formatPrice(plan.monthly, "month")}
-                                                </>
+                                        >
+                                            {isCurrent && (
+                                                <div
+                                                    className="absolute top-0 right-0 bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-lg">
+                                                    CURRENT PLAN
+                                                </div>
                                             )}
-                                        </div>
-                                        <ul className="space-y-3 mb-8">
-                                            {plan.features.map((feature, i) => (
-                                                <li key={i} className="flex items-start">
-                                                    <svg
-                                                        className="w-5 h-5 text-[#f33d74] mr-2 mt-0.5"
-                                                        fill="none"
-                                                        stroke="currentColor"
-                                                        viewBox="0 0 24 24"
+                                            {plan.isPopular && (
+                                                <div
+                                                    className="bg-[#f33d74] text-white text-xs font-bold px-3 py-1 rounded-full inline-block mb-4">
+                                                    POPULAR
+                                                </div>
+                                            )}
+                                            <h3 className="text-2xl font-bold mb-2">
+                                                {plan.title || (plan.domain === "unlimited"
+                                                    ? "Unlimited Domains"
+                                                    : `${plan.domain} Domain${plan.domain === "1" ? "" : "s"}`)}
+                                            </h3>
+                                            <p className="text-gray-400 mb-6">{plan.description}</p>
+                                            <div className="mb-6">
+                                                {plan.isContact ? (
+                                                    <span className="text-3xl font-bold text-[#f33d74]">
+                                                        Contact Sales
+                                                    </span>
+                                                ) : (
+                                                    <>
+                                                        {formatPrice(plan.monthly, "month")}
+                                                    </>
+                                                )}
+                                            </div>
+                                            <ul className="space-y-3 mb-8">
+                                                {plan.features.map((feature, i) => (
+                                                    <li key={i} className="flex items-start">
+                                                        <svg
+                                                            className="w-5 h-5 text-[#f33d74] mr-2 mt-0.5"
+                                                            fill="none"
+                                                            stroke="currentColor"
+                                                            viewBox="0 0 24 24"
+                                                        >
+                                                            <path
+                                                                strokeLinecap="round"
+                                                                strokeLinejoin="round"
+                                                                strokeWidth="2"
+                                                                d="M5 13l4 4L19 7"
+                                                            />
+                                                        </svg>
+                                                        <span>{feature}</span>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                            <div className="flex gap-2">
+                                                {plan.isContact ? (
+                                                    <a
+                                                        href="/contact"
+                                                        className="w-full block py-2 rounded-md font-medium bg-[#f33d74] hover:bg-[#e63368] text-center transition-colors duration-300 text-xs"
                                                     >
-                                                        <path
-                                                            strokeLinecap="round"
-                                                            strokeLinejoin="round"
-                                                            strokeWidth="2"
-                                                            d="M5 13l4 4L19 7"
-                                                        />
-                                                    </svg>
-                                                    <span>{feature}</span>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                        <div className="flex gap-2">
-                                            {plan.isContact ? (
-                                                <a
-                                                    href="/contact"
-                                                    className="w-full block py-2 rounded-md font-medium bg-[#f33d74] hover:bg-[#e63368] text-center transition-colors duration-300 text-xs"
-                                                >
-                                                    Contact Sales
-                                                </a>
-                                            ) : authState === "authenticated" ? (
-                                                isCurrent ? (
-                                                    <button
-                                                        className="w-full py-2 rounded-md font-medium bg-gray-600 cursor-not-allowed text-xs"
-                                                        disabled
-                                                    >
-                                                        Current Plan
-                                                    </button>
+                                                        Contact Sales
+                                                    </a>
+                                                ) : authState === "authenticated" ? (
+                                                    isCurrent ? (
+                                                        <button
+                                                            className="w-full py-2 rounded-md font-medium bg-gray-600 cursor-not-allowed text-xs"
+                                                            disabled
+                                                        >
+                                                            Current Plan
+                                                        </button>
+                                                    ) : (
+                                                        <button
+                                                            onClick={() => handlePlanSelect(plan)}
+                                                            className={`w-full py-2 rounded-md font-medium ${plan.isPopular
+                                                                ? "bg-[#f33d74] hover:bg-[#e63368]"
+                                                                : "bg-gray-700 hover:bg-gray-600"
+                                                                } transition-colors duration-300 text-xs`}
+                                                        >
+                                                            Upgrade Now
+                                                        </button>
+                                                    )
                                                 ) : (
                                                     <button
                                                         onClick={() => handlePlanSelect(plan)}
-                                                        className={`w-full py-2 rounded-md font-medium ${
-                                                            plan.isPopular
-                                                                ? "bg-[#f33d74] hover:bg-[#e63368]"
-                                                                : "bg-gray-700 hover:bg-gray-600"
-                                                        } transition-colors duration-300 text-xs`}
-                                                    >
-                                                        Upgrade Now
-                                                    </button>
-                                                )
-                                            ) : (
-                                                <button
-                                                    onClick={() => handlePlanSelect(plan)}
-                                                    className={`w-full py-2 rounded-md font-medium ${
-                                                        plan.isPopular
+                                                        className={`w-full py-2 rounded-md font-medium ${plan.isPopular
                                                             ? "bg-[#f33d74] hover:bg-[#e63368]"
                                                             : "bg-gray-700 hover:bg-gray-600"
-                                                    } transition-colors duration-300 text-xs`}
-                                                >
-                                                    {plan.isContact ? "Contact Sales" : "Get Started"}
-                                                </button>
-                                            )}
+                                                            } transition-colors duration-300 text-xs`}
+                                                    >
+                                                        {plan.isContact ? "Contact Sales" : "Get Started"}
+                                                    </button>
+                                                )}
+                                            </div>
                                         </div>
-                                    </div>
-                                );
-                            })}
+                                    );
+                                })}
                         </div>
                     )}
                 </div>
