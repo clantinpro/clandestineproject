@@ -20,7 +20,8 @@ const HARDCODE_PRICING = [
         "monthly": "600",
         "quarterly": "1620",
         "semi_annually": "3060",
-        "yearly": "5760"
+        "yearly": "5760",
+        "isHidden": true
     },
     {
         "_id": "api_result_base",
@@ -37,7 +38,8 @@ const HARDCODE_PRICING = [
         "monthly": "1800",
         "quarterly": "4860",
         "semi_annually": "9180",
-        "yearly": "17280"
+        "yearly": "17280",
+        "isHidden": true
     },
     {
         "_id": "20_domains",
@@ -53,9 +55,9 @@ const HARDCODE_PRICING = [
             "Email Support"
         ],
         "monthly": "2700",
-        "quarterly": "7290",
-        "semi_annually": "13770",
-        "yearly": "25920"
+        "quarterly": "8100",
+        "semi_annually": "16200",
+        "yearly": "32400"
     },
     {
         "_id": "40_domains",
@@ -71,9 +73,9 @@ const HARDCODE_PRICING = [
             "Email Support"
         ],
         "monthly": "5000",
-        "quarterly": "13500",
-        "semi_annually": "25500",
-        "yearly": "48000"
+        "quarterly": "15000",
+        "semi_annually": "30000",
+        "yearly": "60000"
     },
     {
         "_id": "60_domains",
@@ -89,9 +91,9 @@ const HARDCODE_PRICING = [
             "Email Support"
         ],
         "monthly": "6000",
-        "quarterly": "16200",
-        "semi_annually": "30600",
-        "yearly": "57600"
+        "quarterly": "18000",
+        "semi_annually": "36000",
+        "yearly": "72000"
     },
     {
         "_id": "unlimited_domains",
@@ -108,8 +110,8 @@ const HARDCODE_PRICING = [
             "Dedicated security advisor"
         ],
         "monthly": "10000",
-        "quarterly": "27000",
-        "semi_annually": "51000",
+        "quarterly": "28500",
+        "semi_annually": "54000",
         "yearly": "96000",
         "isPopular": true
     },
@@ -175,25 +177,11 @@ export default function PricingPage() {
 
     // Fetch pricing
     useEffect(() => {
-        if (authState !== "authenticated") {
-            setPlans(HARDCODE_PRICING);
-            setPlansLoading(false);
-            setPlansError(null);
-            return;
-        }
-        setPlansLoading(true);
+        // Force using HARDCODE_PRICING to override database if any, 
+        // to ensure new packages and 6 months options are available.
+        setPlansLoading(false);
+        setPlans(HARDCODE_PRICING);
         setPlansError(null);
-        fetch("/api/pricing", { credentials: "include" })
-            .then(async (res) => {
-                if (!res.ok) throw new Error("");
-                const data = await res.json();
-                setPlans(Array.isArray(data.data) ? data.data : []);
-            })
-            .catch((err) => {
-                setPlansError(err.message || "");
-                setPlans([]);
-            })
-            .finally(() => setPlansLoading(false));
     }, [authState]);
 
     // Subscription Modal logic
@@ -339,9 +327,11 @@ export default function PricingPage() {
                                         minimumFractionDigits: 2,
                                         maximumFractionDigits: 2,
                                     })}/3 months
-                                    <span className="text-sm text-green-400 ml-2">
-                                        (Save 10%)
-                                    </span>
+                                    {selectedPlan._id === "unlimited_domains" && (
+                                        <span className="text-sm text-green-400 ml-2">
+                                            (Save 5%)
+                                        </span>
+                                    )}
                                 </span>
                             </button>
                             {selectedPlan.semi_annually && selectedPlan.semi_annually !== "Contact Sales" && (
@@ -356,9 +346,11 @@ export default function PricingPage() {
                                             minimumFractionDigits: 2,
                                             maximumFractionDigits: 2,
                                         })}/6 months
-                                        <span className="text-sm text-green-400 ml-2">
-                                            (Save 15%)
-                                        </span>
+                                        {selectedPlan._id === "unlimited_domains" && (
+                                            <span className="text-sm text-green-400 ml-2">
+                                                (Save 10%)
+                                            </span>
+                                        )}
                                     </span>
                                 </button>
                             )}
@@ -373,9 +365,11 @@ export default function PricingPage() {
                                         minimumFractionDigits: 2,
                                         maximumFractionDigits: 2,
                                     })}/year
-                                    <span className="text-sm text-green-400 ml-2">
-                                        (Save 20%)
-                                    </span>
+                                    {selectedPlan._id === "unlimited_domains" && (
+                                        <span className="text-sm text-green-400 ml-2">
+                                            (Save 20%)
+                                        </span>
+                                    )}
                                 </span>
                             </button>
                         </div>
@@ -430,7 +424,7 @@ export default function PricingPage() {
                     ) : (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                             {plans.
-                                filter(plan => !plan.isTest).map((plan, index) => {
+                                filter(plan => !plan.isTest && !plan.isHidden).map((plan, index) => {
                                     const isCurrent = currentPlan && (
                                         (plan._id && plan._id === currentPlan.plan) ||
                                         (plan.domain && plan.domain === currentPlan.domain)
@@ -535,6 +529,15 @@ export default function PricingPage() {
                                 })}
                         </div>
                     )}
+                </div>
+
+                {/* GLOBAL DISCOUNT NOTE */}
+                <div className="max-w-7xl mx-auto px-6 mt-16 text-center">
+                    <p className="text-gray-400 text-sm italic">
+                        * Note: Special discounts
+                        <strong className="text-green-400 font-semibold mx-1">(5% for 3 months, 10% for 6 months, and 20% for 1 year)</strong>
+                        are exclusively available for the <strong>Unlimited Domains</strong> plan.
+                    </p>
                 </div>
             </section>
         </div>
