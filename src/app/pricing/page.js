@@ -177,8 +177,8 @@ export default function PricingPage() {
 
     // Fetch pricing
     useEffect(() => {
-        // Force using HARDCODE_PRICING to override database if any, 
-        // to ensure new packages and 6 months options are available.
+        // Karena DB belum di-update, kita bypass panggil dari hardcode dulu.
+        // Nanti kalau DB sudah di-update, logic block ini diganti lagi untuk panggil API.
         setPlansLoading(false);
         setPlans(HARDCODE_PRICING);
         setPlansError(null);
@@ -427,7 +427,7 @@ export default function PricingPage() {
                                 filter(plan => !plan.isTest && !plan.isHidden).map((plan, index) => {
                                     const isCurrent = currentPlan && (
                                         (plan._id && plan._id === currentPlan.plan) ||
-                                        (plan.domain && plan.domain === currentPlan.domain)
+                                        (plan.domain && plan.domain === currentPlan.domain && !plan.isContact)
                                     );
                                     return (
                                         <div
@@ -466,6 +466,14 @@ export default function PricingPage() {
                                                 )}
                                             </div>
                                             <ul className="space-y-3 mb-8">
+                                                {plan._id === "unlimited_domains" && (
+                                                    <div className="p-3 mb-4 bg-green-500/10 border border-green-500/30 rounded-lg">
+                                                        <span className="text-xs font-bold text-green-400 uppercase tracking-wider block mb-1">🔥 Special Discounts</span>
+                                                        <span className="text-sm text-green-300">
+                                                            Save <strong className="text-white">5%</strong> for 3 months, <strong className="text-white">10%</strong> for 6 months, and <strong className="text-white">20%</strong> for 1 year!
+                                                        </span>
+                                                    </div>
+                                                )}
                                                 {plan.features.map((feature, i) => (
                                                     <li key={i} className="flex items-start">
                                                         <svg
@@ -531,14 +539,7 @@ export default function PricingPage() {
                     )}
                 </div>
 
-                {/* GLOBAL DISCOUNT NOTE */}
-                <div className="max-w-7xl mx-auto px-6 mt-16 text-center">
-                    <p className="text-gray-400 text-sm italic">
-                        * Note: Special discounts
-                        <strong className="text-green-400 font-semibold mx-1">(5% for 3 months, 10% for 6 months, and 20% for 1 year)</strong>
-                        are exclusively available for the <strong>Unlimited Domains</strong> plan.
-                    </p>
-                </div>
+
             </section>
         </div>
     );
