@@ -112,7 +112,7 @@ const HARDCODE_PRICING = [
         "monthly": "10000",
         "quarterly": "28500",
         "semi_annually": "54000",
-        "yearly": "96000",
+        "yearly": "102000",
         "isPopular": true
     },
     {
@@ -367,7 +367,7 @@ export default function PricingPage() {
                                     })}/year
                                     {selectedPlan._id === "unlimited_domains" && (
                                         <span className="text-sm text-green-400 ml-2">
-                                            (Save 20%)
+                                            (Save 15%)
                                         </span>
                                     )}
                                 </span>
@@ -470,7 +470,7 @@ export default function PricingPage() {
                                                     <div className="p-3 mb-4 bg-green-500/10 border border-green-500/30 rounded-lg">
                                                         <span className="text-xs font-bold text-green-400 uppercase tracking-wider block mb-1">🔥 Special Discounts</span>
                                                         <span className="text-sm text-green-300">
-                                                            Save <strong className="text-white">5%</strong> for 3 months, <strong className="text-white">10%</strong> for 6 months, and <strong className="text-white">20%</strong> for 1 year!
+                                                            Save <strong className="text-white">5%</strong> for 3 months, <strong className="text-white">10%</strong> for 6 months, and <strong className="text-white">15%</strong> for 1 year!
                                                         </span>
                                                     </div>
                                                 )}
