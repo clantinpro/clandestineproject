@@ -1,7 +1,7 @@
 # =====================================================
 # Stage 1: deps — install semua dependencies
 # =====================================================
-FROM node:20-alpine AS deps
+FROM node:22.23.4-alpine AS deps
 
 RUN apk add --no-cache libc6-compat
 
@@ -13,7 +13,7 @@ RUN npm ci
 # =====================================================
 # Stage 2: builder — build Next.js app
 # =====================================================
-FROM node:20-alpine AS builder
+FROM node:22.23.4-alpine AS builder
 
 WORKDIR /app
 
@@ -27,7 +27,7 @@ RUN npm run build
 # =====================================================
 # Stage 3: runner — image final yang ringan
 # =====================================================
-FROM node:20-alpine AS runner
+FROM node:22.23.4-alpine AS runner
 
 WORKDIR /app
 
